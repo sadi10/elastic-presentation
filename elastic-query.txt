@@ -94,7 +94,7 @@ curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search
   "query": {
     "match": {
       "name": {
-        "query": "beutifell",
+        "query": "messi",
         "fuzziness": "AUTO"
       }
     }
@@ -102,6 +102,58 @@ curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search
 }'
 -----------------------------------
 
+RANGE QUERY:::
+curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search?pretty" -d '
+  {
+    "query": {
+      "bool":{
+        "must":{"match_all":{}},
+        "filter":{
+          "range": {
+            "age": {
+              "gte": 20,
+              
+              "lte": 60
+            }
+          }
+        }
+      }
+    }
+  }'
+--------------------------------------------
+fuzzy matching between words(based on field)::::::
+{
+  "query": {
+    "fuzzy": {
+      "name": {
+        "value": "roaldo",
+        "fuzziness": "AUTO"
+      }
+    }
+  },
+  "size": 10,
+  "sort": []
+}
+
+------------------------------------------------
+fuzzy matching between words(based on  multiple fields)::::::
+{
+  "query": {
+    "multi_match": {
+      "query": "mesi",
+      "fuzziness": "AUTO",
+      "fields": [
+        "name",
+        "email",
+        "address",
+        "phone"
+      ]
+    }
+  },
+  "size": 10,
+  "sort": [desc],
+  "from": 0
+}
 
 
 
