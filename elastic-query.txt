@@ -57,18 +57,6 @@ curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search
 }'
 ------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
 ------------------------------------------------------------
 curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search?pretty" -d '
 {

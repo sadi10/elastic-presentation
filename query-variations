@@ -1,3 +1,30 @@
+
+
+--------------
+Poor man's autocomplete
+{
+  "query": {
+    "match_phrase_prefix":{
+      "name": "mes"
+    }
+  }
+}
+
+
+--> {
+  "query": {
+    "match": {
+      "name": "mes"
+    }
+  }
+}
+--> does not auto complete
+--------
+
+
+
+
+
 1.match query:(A match query is used to search for documents that match a specified text, number, or boolean value. It analyzes the text and finds relevant documents based on the terms.)
 
 {
@@ -171,6 +198,9 @@ curl -X GET "localhost:9200/customers/_search" -H 'Content-Type: application/jso
     "excludes": ["password"]
   }
 }
+
+
+
 
 
 
