@@ -1,3 +1,8 @@
+
+
+create index:::
+curl -XPUT 'http://localhost:9200/customers?&pretty'
+
 create document in index:::
 -------------------------------------
 curl -X POST "http://localhost:9200/customers/_doc?pretty" -H "Content-Type: application/json" -d '{
