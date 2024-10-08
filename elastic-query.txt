@@ -1,0 +1,104 @@
+create document in index:::
+-------------------------------------
+curl -X POST "http://localhost:9200/customers/_doc?pretty" -H "Content-Type: application/json" -d '{
+  "name": "messi",
+  "age": 35,
+  "gender": "male",
+  "email": "messi@gmail.com",
+  "phone": "999752733786498945",
+  "address": "Avenida del Libertador 8500, Piso 24, Oficina 2401, Torre Norte, Complejo Torre Al Río, Vicente López, Buenos Aires, CP B1638BEU, Argentina",
+  "city": "Buenos Aires",
+  "state": "Buenos Aires Province" 
+}'
+------------------------------------
+
+
+Get total documents:::
+-------------------------------
+curl -X GET "http://localhost:9200/customers/_count?pretty"
+------------------------------
+
+
+
+-----------------------------
+simple search query:::
+curl -XGET "localhost:9200/customers/_search?q=wyoming&pretty"
+---------------------------------------
+
+
+
+
+----limit and size----
+curl -XGET "localhost:9200/customers/_search?q=wyoming&from=5&size=20&pretty"
+----------------------------
+
+
+
+---Another Query----
+curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search?pretty" -d '
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    }
+  ],
+  "size": 20,
+  "_source": ["name", "age", "gender"]
+}'
+------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search?pretty" -d '
+{
+  "_source": {
+    "includes": ["n*"],
+    "excludes": ["a*"]
+  },
+  "query": {
+    "regexp": {
+      "name": "[0-9A-Za-z]+"
+    }
+  }
+}'
+------------------------------------------------
+
+-------fuzzy query------
+curl -H 'Content-Type: application/json' -XGET "localhost:9200/customers/_search?pretty" -d '
+{
+  "_source": {
+    "includes": ["n*"],
+    "excludes": ["a*"]
+  },
+  "query": {
+    "match": {
+      "name": {
+        "query": "beutifell",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}'
+-----------------------------------
+
+
+
+
+
+
