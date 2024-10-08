@@ -1,0 +1,191 @@
+1.match query:(A match query is used to search for documents that match a specified text, number, or boolean value. It analyzes the text and finds relevant documents based on the terms.)
+
+{
+  "query": {
+    "match": {
+      "name": "mesi"
+    }
+  }
+}
+
+2.multi-match query(matches on multiple fields...):
+{
+  "query": {
+    "multi_match": {
+      "query": "mesiii sdc---......term",
+      "fields": ["name", "email", "address"]
+    }
+  }
+}
+
+
+3.fuzzy query:(matches words close to that word based on Levenshtein distance)(based on one field)
+{
+  "query": {
+    "fuzzy": {
+      "name": {
+        "value": "mesi",
+        "fuzziness": "AUTO"
+      }
+    }
+  }
+}
+4.fuzzy matching between words(based on  multiple fields)::::::
+{
+  "query": {
+    "multi_match": {
+      "query": "mesi",
+      "fuzziness": "AUTO",
+      "fields": [
+        "name",
+        "email",
+        "address",
+        "phone"
+      ]
+    }
+  },
+  "size": 10,
+  "sort": [desc],
+  "from": 0
+}
+
+
+5.Term query(Returns documents that contain an exact term in a provided field):
+{
+  "query": {
+    "term": {
+      "name": "messi"
+    }
+  }
+}
+
+
+6.Filter Query(Filter results based on the given condition):
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "name": "John"
+        }
+      },
+      "filter": {
+        "range": {
+          "age": {
+            "gte": 30,
+            "lte": 40
+          }
+        }
+      }
+    }
+  }
+}
+
+7.size and from where it should start:
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 10,
+  "from": 0
+}
+
+8.sort based on given field:
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "age": {
+        "order": "asc"
+      }
+    }
+  ]
+}
+
+9. Aggregation Query:
+curl -X POST "http://localhost:9200/customers/_search" -H 'Content-Type: application/json' -d '{ 
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "average_age": {
+      "avg": {
+        "field": "age"
+      }
+    }
+  }
+}'
+
+
+10.logical operator query(should clauses value can be changed):
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "name": "messi"
+        }
+      },
+      "should": [
+        {
+          "match": {
+            "age": "35"
+          }
+        }
+      ],
+      "must_not": {
+        "match": {
+          "gender": "female"
+        }
+      }
+    }
+  }
+}
+
+
+11.Highllight query:
+curl -X GET "localhost:9200/customers/_search" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "address": "New"      
+    }
+  },
+  "highlight": {
+    "fields": {
+      "address": {}
+    }
+  }
+}'
+
+
+12.include and exclude fields:
+{
+  "query": {
+    "match_all": {}
+  },
+  "_source": {
+    "includes": ["name", "email","address"],
+    "excludes": ["password"]
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
