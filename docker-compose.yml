@@ -1,17 +1,22 @@
-version: '3.6'
 services:
   Elasticsearch:
     image: elasticsearch:7.16.2
     container_name: elasticsearch
     restart: always
     volumes:
-    - elastic_data:/usr/share/elasticsearch/data/
+      - elastic_data:/usr/share/elasticsearch/data/
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       discovery.type: single-node    
     ports:
-    - '9200:9200'
-    - '9300:9300'
+      - '9201:9200'
+      - '9301:9300'
     networks:
       - elk
+
+volumes:
+  elastic_data: {}
+
+networks:
+  elk: {}
 
