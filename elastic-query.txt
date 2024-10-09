@@ -6,14 +6,14 @@ curl -XPUT 'http://localhost:9200/customers?&pretty'
 create document in index:::
 -------------------------------------
 curl -X POST "http://localhost:9200/customers/_doc?pretty" -H "Content-Type: application/json" -d '{
-  "name": "messi",
-  "age": 35,
-  "gender": "male",
-  "email": "messi@gmail.com",
-  "phone": "999752733786498945",
-  "address": "Avenida del Libertador 8500, Piso 24, Oficina 2401, Torre Norte, Complejo Torre Al Río, Vicente López, Buenos Aires, CP B1638BEU, Argentina",
-  "city": "Buenos Aires",
-  "state": "Buenos Aires Province" 
+  "name": "The inception",
+  "age": 20,
+  "gender": "other",
+  "email": "nothing@gmail.com",
+  "phone": "109273873992",
+  "address": "nothing",
+  "city": "Hollywood",
+  "state": "Hollywood" 
 }'
 ------------------------------------
 
@@ -128,7 +128,7 @@ fuzzy matching between words(based on  multiple fields)::::::
 {
   "query": {
     "multi_match": {
-      "query": "mesi",
+      "query": "the ineption",
       "fuzziness": "AUTO",
       "fields": [
         "name",
@@ -137,12 +137,9 @@ fuzzy matching between words(based on  multiple fields)::::::
         "phone"
       ]
     }
-  },
-  "size": 10,
-  "sort": [desc],
-  "from": 0
-}
+  }
 
+}
 
 
 
